@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <script>
+        // 在用户点击其他地方时，关闭弹窗
+        window.onload = function () {
+            // 获取弹窗
+            var modal = document.getElementById('myform');
+
+            // 获取弹窗(更新公告）
+            var modal4ann = document.getElementById('annonce');
+
+            // 打开弹窗的按钮对象
+            var btn = document.getElementById("mybtn");
+
+            // 打开弹窗的按钮对象（更新公告）
+            var btn4annonce = document.getElementById("annbtn");
+
+            // 获取 <span> 元素，用于关闭弹窗
+            var span1 = document.querySelector('.close1');
+
+            // 获取 <span> 元素，用于关闭弹窗
+            var span2 = document.querySelector('.close2');
+
+            // 点击按钮打开弹窗
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // 点击按钮打开弹窗（更新公告）
+            btn4annonce.onclick = function () {
+                modal4ann.style.display = "block";
+            }
+
+            // 点击 <span> (x), 关闭弹窗
+            span1.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // 点击 <span> (x), 关闭弹窗
+            span2.onclick = function () {
+                modal4ann.style.display = "none";
+            }
+
+            // 在用户点击其他地方时，关闭弹窗
+        }
+        window.onclick = function (event1) {
+            // 获取弹窗
+            var modal4ann = document.getElementById('annonce');
+            if (event1.target == modal4ann) {
+                modal4ann.style.display = "none";
+            }
+        }
+        window.onclick = function (event2) {
+            // 获取弹窗
+            var modal = document.getElementById('myform');
+            if (event2.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <style>
+        .d1 {
+            /*font-size: 18px;*/
+            line-height: 30px;
+            height: 90px;
+            max-height: 90px;
+            overflow: hidden; /* 超出的文本隐藏 */
+            text-overflow: ellipsis; /* 溢出用省略号显示 */
+            display: -webkit-box; /* 将对象作为弹性伸缩盒子模型显示 */
+            -webkit-box-orient: vertical; /* 这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数 */
+            -webkit-line-clamp: 3; /*  从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式） */
+        }
+
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 固定定位 */
+            z-index: 1; /* 设置在顶层 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* 弹窗内容 */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close2 .close1 {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close2:hover,
+        .close2:focus
+        .close1:hover,
+        .close1:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        span.redStar {
+            color: red;
+            font-size: 8px;
+            display: inline-block;
+            width: 60%;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-12">
+            <p>
+                <img src="img/11.jpg" alt="Smiley face" style="float:left" width="75" height="75">
+                <!--            <h1 style="font-weight: bold">Naive Search</h1>-->
+            <h1>Naive Search</h1>
+            </p>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" id="app">
+        <div class="col-9">
+            <form onsubmit="return false;" class="form-inline">
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control" id="title-es" style="width:600px" placeholder="输入内容"
+                           v-model="keyword"
+                           v-on:keyup.enter="searchWithEs">
+                </div>
+                <button id="mybtn" type="button" class="btn btn-primary mb-2" style="margin-left: 5px;">
+                    上传
+                </button>
+                <button type="button" class="btn btn-primary mb-2" style="margin-left: 5px;" v-on:click="searchWithEs">
+                    搜索
+                </button>
+                <button id="annbtn" type="button" class="btn btn-primary mb-2" style="margin-left: 5px;">
+                    更新公告
+                </button>
+                <span style="margin-left: 10px; color: green;">耗时(ms)：{{duration}}</span>
+            </form>
+            <!-- 弹窗表单 -->
+            <div id="myform" class="modal">
+                <form method="post" class="modal-content" id="editForm" action="put">
+                    <span class="close1">&times;</span>
+                    标题:<input type="text" name="title" placeholder="(必填)">
+                    内容:<textarea rows="4" cols="50" name="content"></textarea><br>
+                    发布人: <input type="text" name="author"><br>
+                    <input type="submit" value="提交">
+                </form>
+            </div>
+            <div id="annonce" class="modal">
+                                <div class="modal-content" style="width: 500px">
+                                    <span class="close2">&times;</span>
+<!--                                    <h4 >v1.0版本更新内容(2021/04/27):</h4><br>-->
+<!--                                    <p><a style="color:red;">*</a><a style="font-weight: bold;font-size:15px"> 改名Naive Search，添加憨批Logo</a></p>-->
+<!--                                    <p><a style="color:red;">*</a><a style="font-weight: bold;font-size:15px"> 搜索框大小调整，添加更新公告按钮</a></p>-->
+<!--                                    <p><a style="color:red;">*</a><a style="font-weight: bold;font-size:15px"> 新增笔记上传功能</a></p>-->
+                                    <h5 style="font-weight: bold">v1.0版本更新内容(2021/04/27):</h5><br>
+                                    <p><a style="color:red;">*</a><a style="font-size:15px"> 改名Naive Search，添加憨批Logo</a></p>
+                                    <p><a style="color:red;">*</a><a style="font-size:15px"> 搜索框大小调整，添加更新公告按钮</a></p>
+                                    <p><a style="color:red;">*</a><a style="font-size:15px"> 新增笔记上传功能</a></p>
+                                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12" v-for="(blog,index) in blogList" style="margin-top: 20px;">
+                    <div class="card">
+                        <!--                        <div class="card-img-top">-->
+                        <!--                            <img :src="'img/'+(index%10+1)+'.jpg'" style="height: auto;width: 100%"/>-->
+                        <!--                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">{{blog.title}}</h5>
+                            <p style="color:#898a8b">{{blog.author}} 更新于 {{blog.createTime}}</p>
+                            <div class="d1">{{blog.content}}</div>
+                            <a :href="'blog.html?id='+blog.id" style="font-weight: bold">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script>
+
+    var app;
+    app = new Vue({
+        el: '#app',
+        data: {
+            blogList: [],
+            keyword: '',
+            duration: ''
+        },
+        methods: {
+            getBlogs: function () {
+                console.log("getBlogs");
+                var that = this;
+                axios.get("/blogs", {}).then(function (response) {
+                    that.blogList = response.data;
+                })
+            },
+            // searchWithMysql: function () {
+            //     console.log("searchWithMysql");
+            //     var that = this;
+            //     var param = {"type": "mysql", "keyword": that.keyword};
+            //     axios.post("/search", param).then(function (response) {
+            //         that.blogList = response.data.list;
+            //         that.duration = response.data.duration;
+            //     })
+            // },
+            searchWithEs: function () {
+                console.log("searchWithEs");
+                var that = this;
+                var param = {"keyword": that.keyword};
+                axios.post("/search", param).then(function (response) {
+                    that.blogList = response.data.list;
+                    that.duration = response.data.duration;
+                })
+            }
+        },
+        created: function () {
+            this.getBlogs();
+        }
+    })
+
+
+</script>
+
+
+</body>
+</html>

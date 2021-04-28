@@ -1,0 +1,10 @@
+D:\simplesearch\src\main\java\com\txc\search\utils\ElasticsearchUtil.java
+D:\simplesearch\src\main\java\com\txc\search\utils\UIDUtil.java
+D:\simplesearch\src\main\java\com\txc\search\controller\DataController.java
+D:\simplesearch\src\main\java\com\txc\search\entity\es\EsSearchEntity.java
+D:\simplesearch\src\main\java\com\txc\search\repository\es\EsSearchRepository.java
+D:\simplesearch\src\main\java\com\txc\search\repository\mysql\MysqlSearchRepository.java
+D:\simplesearch\src\main\java\com\txc\search\SpringbootSearchApplication.java
+D:\simplesearch\src\main\java\com\txc\search\controller\IndexController.java
+D:\simplesearch\src\main\java\com\txc\search\controller\CORSConfiguration.java
+D:\simplesearch\src\main\java\com\txc\search\entity\mysql\MysqlSearchEntity.java
