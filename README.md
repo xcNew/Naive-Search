@@ -10,4 +10,4 @@
 
 * 改名Naive Search，添加Logo
 * 搜索框大小调整，添加更新公告按钮
-* 新增文档上传功能，支持markdown解析
+* 新增文档上传功能，文本详情支持markdown解析
