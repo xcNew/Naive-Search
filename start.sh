@@ -27,4 +27,4 @@ fi
 rm -f tpid
 nohup java -jar ./$JAR_NAME --spring.profiles.active=test >log.txt  2>&1 &
 echo $! > tpid
-echo 'Start Success!'
+echo 'Start Success!' 
